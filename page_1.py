@@ -9,8 +9,7 @@ def nextPage():
     ws.destroy()
     import quiz_game
 
-text = Label(ws,text="Welcome to the quiz game",font=("Comic sans MS", 24, "bold"),bg="#45458B",fg="white"
-        )
+text = Label(ws,text="Welcome to the quiz game",font=("Comic sans MS", 24, "bold"),bg="#45458B",fg="white" )
 text.pack(fill=X)
 
 img1 = PhotoImage(file="C:/Users/HP/Downloads/quizimage.png")
@@ -19,6 +18,7 @@ labelimage = Label(
     image = img1,
     background = "#ffffff",
 )
+
 labelimage.pack(pady=(50))
 
 Rules = Label(ws,
