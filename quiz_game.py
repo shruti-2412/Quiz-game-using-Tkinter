@@ -13,38 +13,64 @@ class Quiz:
         self.total_size = len(question)
         self.correct = 0
 
-    # display result function
-    def disp_res(self):
+    # display title function
+    def disp_title(self):
+        title = Label(
+                ws,
+                text="Python QUIZ",
+                width=50,
+                bg="#45458B",
+                fg="white",
+                font=("ariel", 20, "bold")
+        )
+        title.place(x=0, y=2)
 
-        correct = f"Correct: {self.correct}"
-        wrong_count = self.total_size - self.correct
-        wrong = f"Wrong: {wrong_count}"
-        score = int(self.correct / self.total_size * 100)
-        result = f"Score: {score}%"
+    # display question function
+    def disp_ques(self):
+        qno = Label(
+            ws,
+            text=question[self.qno],
+            width=60,
+            font=('ariel', 16, 'bold'),
+            anchor='w',
+            wraplength=700,
+            justify='center'
+        )
+        qno.place(x=70, y=100)
+        
+    # display option function
+    def disp_opt(self):
+        val = 0
+        self.opt_sel.set(0)
 
-        mb.showinfo("Result", f"{result}\n{correct}\n{wrong}")
+        for option in options[self.qno]:
+            self.opts[val]['text'] = option
+            val += 1
 
+    # radio button function
+    def radio_buttons(self):
+        q_list = []
+        y_pos = 150
+
+        while len(q_list) < 4:
+            radio_btn = Radiobutton(
+                ws,
+                text=" ",
+                variable=self.opt_sel,
+                value=len(q_list) + 1,
+                font=("ariel", 14)
+            )
+            q_list.append(radio_btn)
+            radio_btn.place(x=100, y=y_pos)
+            y_pos += 40
+        return q_list
+    
     # check answer function
     def check_ans(self, qno):
 
         if self.opt_sel.get() == answer[qno]:
             return True
-
-    # next button function
-    def next_btn(self):
-
-        if self.check_ans(self.qno):
-            self.correct += 1
-
-        self.qno += 1
-
-        if self.qno == self.total_size:
-            self.disp_res()
-            ws.destroy()
-        else:
-            self.disp_ques()
-            self.disp_opt()
-
+        
     # next and quit button
     def buttons(self):
         next_button = Button(
@@ -70,57 +96,31 @@ class Quiz:
         )
         quit_button.place(x=700, y=50)
 
-    # display option function
-    def disp_opt(self):
-        val = 0
-        self.opt_sel.set(0)
+    # next button function
+    def next_btn(self):
 
-        for option in options[self.qno]:
-            self.opts[val]['text'] = option
-            val += 1
+        if self.check_ans(self.qno):
+            self.correct += 1
 
-    # display question function
-    def disp_ques(self):
-        qno = Label(
-            ws,
-            text=question[self.qno],
-            width=60,
-            font=('ariel', 16, 'bold'),
-            anchor='w',
-            wraplength=700,
-            justify='center'
-        )
-        qno.place(x=70, y=100)
+        self.qno += 1
 
-    # display title function
-    def disp_title(self):
-        title = Label(
-            ws,
-            text="Python QUIZ",
-            width=50,
-            bg="#45458B",
-            fg="white",
-            font=("ariel", 20, "bold")
-        )
-        title.place(x=0, y=2)
+        if self.qno == self.total_size:
+            self.disp_res()
+            ws.destroy()
+        else:
+            self.disp_ques()
+            self.disp_opt()
+            
+    # display result function
+    def disp_res(self):
+        
+        correct = f"Correct: {self.correct}"
+        wrong_count = self.total_size - self.correct
+        wrong = f"Wrong: {wrong_count}"
+        score = int(self.correct / self.total_size * 100)
+        result = f"Score: {score}%"
 
-    # radio button function
-    def radio_buttons(self):
-        q_list = []
-        y_pos = 150
-
-        while len(q_list) < 4:
-            radio_btn = Radiobutton(
-                ws,
-                text=" ",
-                variable=self.opt_sel,
-                value=len(q_list) + 1,
-                font=("ariel", 14)
-            )
-            q_list.append(radio_btn)
-            radio_btn.place(x=100, y=y_pos)
-            y_pos += 40
-        return q_list
+        mb.showinfo("Result", f"{result}\n{correct}\n{wrong}")
 
 
 ws = Tk()
